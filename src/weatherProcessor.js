@@ -9,6 +9,22 @@ export function processWeatherData(rawData) {
     currentDay.sunset,
   );
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const filteredForecast = forecast
+    .filter((day) => {
+      const forecastDate = new Date(day.datetime);
+      forecastDate.setHours(0, 0, 0, 0);
+      return forecastDate >= tomorrow;
+    })
+    .slice(0, 6);
+
+  const currentDate = new Date().toISOString().split("T")[0];
+
   return {
     location: rawData.resolvedAddress,
     isNight: isNightTime,
@@ -19,10 +35,10 @@ export function processWeatherData(rawData) {
       windSpeed: currentConditions.windspeed,
       condition: currentConditions.conditions,
       icon: currentConditions.icon,
-      datetime: currentConditions.datetime,
+      datetime: currentDate,
       description: rawData.description,
     },
-    forecast: forecast.slice(0, 7).map((day) => ({
+    forecast: filteredForecast.map((day) => ({
       date: day.datetime,
       high: day.tempmax,
       low: day.tempmin,
@@ -62,6 +78,15 @@ export function convertToCelsius(fahrenheit) {
 export function formatTemperature(temp, unit) {
   const value = unit === "F" ? convertToFahrenheit(temp) : temp;
   return `${value.toFixed(1)} °${unit}`;
+}
+
+export function convertKmhToMph(kmh) {
+  return kmh * 0.621371;
+}
+
+export function formatWindSpeed(kmh) {
+  const mph = convertKmhToMph(kmh);
+  return `${mph.toFixed(1)} mph`;
 }
 
 export function formatDate(dateString) {

@@ -2,6 +2,7 @@ import {
   formatTemperature,
   formatDate,
   formatFullDate,
+  formatWindSpeed,
   getWeatherEmoji,
 } from "./weatherProcessor.js";
 
@@ -40,7 +41,7 @@ export function renderCurrentWeather(data, unit) {
         
         <div class="info-row">
           <span class="info-label">Wind Speed:</span>
-          <span class="info-value">${data.current.windSpeed.toFixed(1)} km/h</span>
+          <span class="info-value">${formatWindSpeed(data.current.windSpeed)}</span>
         </div>
         
         <div class="info-row">
@@ -87,7 +88,7 @@ export function renderForecastDayAsCurrent(location, day, unit) {
         
         <div class="info-row">
           <span class="info-label">Wind Speed:</span>
-          <span class="info-value">${day.windSpeed.toFixed(1)} km/h</span>
+          <span class="info-value">${formatWindSpeed(day.windSpeed)}</span>
         </div>
         
         <div class="info-row">
