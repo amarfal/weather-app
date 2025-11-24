@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lacquer&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌞</text></svg>"
+    />
+    <title>Weather App</title>
+  <script defer src="bundle.js"></script></head>
+  <body>
+    <div id="gif-background"></div>
+
+    <div class="container">
+      <header>
+        <h1 class="app-title">Weather</h1>
+        <p class="app-subtitle">Real-time Weather Forecasts</p>
+      </header>
+
+      <div class="search-section">
+        <form id="search-form">
+          <input
+            type="text"
+            id="location-input"
+            placeholder="Enter location"
+            required
+          />
+          <button type="submit" class="search-button">Search</button>
+        </form>
+        <button id="unit-toggle" class="toggle-button">°F</button>
+      </div>
+
+      <div id="error-message" class="error-message"></div>
+
+      <main>
+        <section id="current-weather" class="current-weather-section"></section>
+        <section id="forecast" class="forecast-section"></section>
+      </main>
+    </div>
+  </body>
+</html>
