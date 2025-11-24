@@ -49,9 +49,6 @@ async function handleDayClick(dayIndex) {
 
   const gifUrl = await fetchWeatherGif(selectedDay.condition);
 
-  const isNightForDay = checkIfNightForForecast(selectedDay);
-  setTheme(isNightForDay);
-
   renderForecastDayAsCurrent(
     currentWeatherData.location,
     selectedDay,
@@ -64,12 +61,6 @@ async function handleDayClick(dayIndex) {
     selectedDayIndex,
   );
   setBackgroundGif(gifUrl);
-}
-
-function checkIfNightForForecast(day) {
-  const now = new Date();
-  const currentHour = now.getHours();
-  return currentHour < 6 || currentHour > 20;
 }
 
 function toggleTemperatureUnit() {

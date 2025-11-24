@@ -25,24 +25,32 @@ export async function fetchWeatherData(location) {
 export async function fetchWeatherGif(weatherCondition) {
   const condition = weatherCondition.toLowerCase();
 
-  const weatherGifs = {
-    sunny: "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif",
-    clear: "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif",
-    rain: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
-    rainy: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
-    drizzle: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
-    thunderstorm: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
-    lightning: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
-    storm: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
-    snow: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
-    snowy: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
-    snowing: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
-  };
+  if (
+    condition.includes("snow") ||
+    condition.includes("snowy") ||
+    condition.includes("snowing")
+  ) {
+    return "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif";
+  }
 
-  for (const [key, gifUrl] of Object.entries(weatherGifs)) {
-    if (condition.includes(key)) {
-      return gifUrl;
-    }
+  if (
+    condition.includes("thunder") ||
+    condition.includes("lightning") ||
+    condition.includes("storm")
+  ) {
+    return "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif";
+  }
+
+  if (
+    condition.includes("rain") ||
+    condition.includes("rainy") ||
+    condition.includes("drizzle")
+  ) {
+    return "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif";
+  }
+
+  if (condition.includes("sunny") || condition.includes("clear")) {
+    return "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif";
   }
 
   return "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif";
