@@ -77,7 +77,7 @@ export function convertToCelsius(fahrenheit) {
 
 export function formatTemperature(temp, unit) {
   const value = unit === "F" ? convertToFahrenheit(temp) : temp;
-  return `${value.toFixed(1)} °${unit}`;
+  return `${Math.round(value)} °${unit}`;
 }
 
 export function convertKmhToMph(kmh) {
@@ -86,7 +86,7 @@ export function convertKmhToMph(kmh) {
 
 export function formatWindSpeed(kmh) {
   const mph = convertKmhToMph(kmh);
-  return `${mph.toFixed(1)} mph`;
+  return `${Math.round(mph)} mph`;
 }
 
 export function formatDate(dateString) {

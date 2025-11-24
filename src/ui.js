@@ -36,7 +36,7 @@ export function renderCurrentWeather(data, unit) {
         
         <div class="info-row">
           <span class="info-label">Humidity:</span>
-          <span class="info-value">${data.current.humidity.toFixed(1)} %</span>
+          <span class="info-value">${Math.round(data.current.humidity)} %</span>
         </div>
         
         <div class="info-row">
@@ -83,7 +83,7 @@ export function renderForecastDayAsCurrent(location, day, unit) {
         
         <div class="info-row">
           <span class="info-label">Humidity:</span>
-          <span class="info-value">${day.humidity.toFixed(1)} %</span>
+          <span class="info-value">${Math.round(day.humidity)} %</span>
         </div>
         
         <div class="info-row">
