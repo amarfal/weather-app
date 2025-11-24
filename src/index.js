@@ -4,6 +4,7 @@ import { processWeatherData } from "./weatherProcessor.js";
 import {
   renderCurrentWeather,
   renderForecast,
+  renderForecastDayAsCurrent,
   setBackgroundGif,
   setTheme,
   showError,
@@ -11,8 +12,9 @@ import {
   clearDisplay,
 } from "./ui.js";
 
-let currentUnit = "C";
+let currentUnit = "F";
 let currentWeatherData = null;
+let selectedDayIndex = null;
 
 async function loadWeather(location) {
   try {
@@ -20,17 +22,54 @@ async function loadWeather(location) {
 
     const rawData = await fetchWeatherData(location);
     currentWeatherData = processWeatherData(rawData);
+    selectedDayIndex = null;
 
     const gifUrl = await fetchWeatherGif(currentWeatherData.current.condition);
 
     setTheme(currentWeatherData.isNight);
     renderCurrentWeather(currentWeatherData, currentUnit);
-    renderForecast(currentWeatherData.forecast, currentUnit);
+    renderForecast(
+      currentWeatherData.forecast,
+      currentUnit,
+      handleDayClick,
+      selectedDayIndex,
+    );
     setBackgroundGif(gifUrl);
   } catch (error) {
     showError(`Unable to fetch weather data. Please try again.`);
     clearDisplay();
   }
+}
+
+async function handleDayClick(dayIndex) {
+  if (!currentWeatherData) return;
+
+  selectedDayIndex = dayIndex;
+  const selectedDay = currentWeatherData.forecast[dayIndex];
+
+  const gifUrl = await fetchWeatherGif(selectedDay.condition);
+
+  const isNightForDay = checkIfNightForForecast(selectedDay);
+  setTheme(isNightForDay);
+
+  renderForecastDayAsCurrent(
+    currentWeatherData.location,
+    selectedDay,
+    currentUnit,
+  );
+  renderForecast(
+    currentWeatherData.forecast,
+    currentUnit,
+    handleDayClick,
+    selectedDayIndex,
+  );
+  setBackgroundGif(gifUrl);
+}
+
+function checkIfNightForForecast(day) {
+  const now = new Date();
+  const currentHour = now.getHours();
+  return currentHour < 6 || currentHour > 20;
 }
 
 function toggleTemperatureUnit() {
@@ -40,8 +79,22 @@ function toggleTemperatureUnit() {
   toggleButton.textContent = `°${currentUnit}`;
 
   if (currentWeatherData) {
-    renderCurrentWeather(currentWeatherData, currentUnit);
-    renderForecast(currentWeatherData.forecast, currentUnit);
+    if (selectedDayIndex !== null) {
+      const selectedDay = currentWeatherData.forecast[selectedDayIndex];
+      renderForecastDayAsCurrent(
+        currentWeatherData.location,
+        selectedDay,
+        currentUnit,
+      );
+    } else {
+      renderCurrentWeather(currentWeatherData, currentUnit);
+    }
+    renderForecast(
+      currentWeatherData.forecast,
+      currentUnit,
+      handleDayClick,
+      selectedDayIndex,
+    );
   }
 }
 

@@ -29,6 +29,11 @@ export function processWeatherData(rawData) {
       condition: day.conditions,
       precipChance: day.precipprob,
       icon: day.icon,
+      description: day.description,
+      humidity: day.humidity,
+      windSpeed: day.windspeed,
+      sunrise: day.sunrise,
+      sunset: day.sunset,
     })),
   };
 }
@@ -74,4 +79,44 @@ export function formatFullDate(dateString) {
     year: "numeric",
   };
   return date.toLocaleDateString("en-US", options);
+}
+
+export function getWeatherEmoji(condition) {
+  const conditionLower = condition.toLowerCase();
+
+  if (conditionLower.includes("clear") || conditionLower.includes("sunny")) {
+    return "☀️";
+  }
+  if (
+    conditionLower.includes("rain") ||
+    conditionLower.includes("drizzle") ||
+    conditionLower.includes("shower")
+  ) {
+    return "🌧️";
+  }
+  if (
+    conditionLower.includes("thunder") ||
+    conditionLower.includes("lightning") ||
+    conditionLower.includes("storm")
+  ) {
+    return "⚡";
+  }
+  if (conditionLower.includes("snow") || conditionLower.includes("blizzard")) {
+    return "❄️";
+  }
+  if (
+    conditionLower.includes("cloud") ||
+    conditionLower.includes("overcast") ||
+    conditionLower.includes("partly")
+  ) {
+    return "☁️";
+  }
+  if (conditionLower.includes("fog") || conditionLower.includes("mist")) {
+    return "🌫️";
+  }
+  if (conditionLower.includes("wind")) {
+    return "💨";
+  }
+
+  return "☁️";
 }

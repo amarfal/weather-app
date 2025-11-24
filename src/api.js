@@ -23,25 +23,27 @@ export async function fetchWeatherData(location) {
 }
 
 export async function fetchWeatherGif(weatherCondition) {
-  try {
-    const searchTerm = `${weatherCondition} weather`;
-    const response = await fetch(
-      `${GIPHY_BASE_URL}?api_key=${GIPHY_API_KEY}&q=${encodeURIComponent(searchTerm)}&limit=1&rating=g`,
-    );
+  const condition = weatherCondition.toLowerCase();
 
-    if (!response.ok) {
-      throw new Error(`Giphy API error: ${response.status}`);
+  const weatherGifs = {
+    sunny: "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif",
+    clear: "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif",
+    rain: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
+    rainy: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
+    drizzle: "https://media.giphy.com/media/129BtnUUD6Lrzi/giphy.gif",
+    thunderstorm: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
+    lightning: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
+    storm: "https://media.giphy.com/media/Ch1zCx8tu6DQY/giphy.gif",
+    snow: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
+    snowy: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
+    snowing: "https://media.giphy.com/media/6YNgoTEPs6vZe/giphy.gif",
+  };
+
+  for (const [key, gifUrl] of Object.entries(weatherGifs)) {
+    if (condition.includes(key)) {
+      return gifUrl;
     }
-
-    const data = await response.json();
-
-    if (data.data && data.data.length > 0) {
-      return data.data[0].images.original.url;
-    }
-
-    return null;
-  } catch (error) {
-    console.error("Failed to fetch weather gif:", error);
-    return null;
   }
+
+  return "https://media.giphy.com/media/HvYdoLbPqSdNu/giphy.gif";
 }

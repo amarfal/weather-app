@@ -2,6 +2,7 @@ import {
   formatTemperature,
   formatDate,
   formatFullDate,
+  getWeatherEmoji,
 } from "./weatherProcessor.js";
 
 export function setTheme(isNight) {
@@ -43,7 +44,7 @@ export function renderCurrentWeather(data, unit) {
         </div>
         
         <div class="info-row">
-          <span class="info-label">${data.current.condition}</span>
+          <span class="info-label">${getWeatherEmoji(data.current.condition)} ${data.current.condition}</span>
         </div>
         
         <div class="info-row">
@@ -58,14 +59,67 @@ export function renderCurrentWeather(data, unit) {
   `;
 }
 
-export function renderForecast(forecastData, unit) {
+export function renderForecastDayAsCurrent(location, day, unit) {
+  const currentWeatherSection = document.getElementById("current-weather");
+
+  const avgTemp = (day.high + day.low) / 2;
+
+  currentWeatherSection.innerHTML = `
+    <div class="weather-card">
+      <h2 class="location-name">${location}</h2>
+      <h3 class="section-title">FORECAST FOR ${formatFullDate(day.date).toUpperCase()}</h3>
+      
+      <div class="weather-info">
+        <div class="info-row">
+          <span class="info-label">High Temperature:</span>
+          <span class="info-value">${formatTemperature(day.high, unit)}</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Low Temperature:</span>
+          <span class="info-value">${formatTemperature(day.low, unit)}</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Humidity:</span>
+          <span class="info-value">${day.humidity.toFixed(1)} %</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Wind Speed:</span>
+          <span class="info-value">${day.windSpeed.toFixed(1)} km/h</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">${getWeatherEmoji(day.condition)} ${day.condition}</span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-label">Precipitation Chance: ${day.precipChance}%</span>
+        </div>
+        
+        <div class="weather-description">
+          ${day.description}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function renderForecast(
+  forecastData,
+  unit,
+  onDayClick,
+  activeIndex = null,
+) {
   const forecastSection = document.getElementById("forecast");
 
   const forecastCards = forecastData
     .map(
-      (day) => `
-    <div class="forecast-card">
+      (day, index) => `
+    <div class="forecast-card ${activeIndex === index ? "active" : ""}" data-index="${index}">
       <div class="forecast-date">${formatDate(day.date)}</div>
+      <div class="forecast-emoji">${getWeatherEmoji(day.condition)}</div>
       <div class="forecast-condition">${day.condition}</div>
       <div class="forecast-temps">
         <span class="temp-high">${formatTemperature(day.high, unit)}</span>
@@ -79,6 +133,11 @@ export function renderForecast(forecastData, unit) {
     .join("");
 
   forecastSection.innerHTML = forecastCards;
+
+  const cards = forecastSection.querySelectorAll(".forecast-card");
+  cards.forEach((card, index) => {
+    card.addEventListener("click", () => onDayClick(index));
+  });
 }
 
 export function setBackgroundGif(gifUrl) {
