@@ -102,6 +102,7 @@ header {
 }
 
 .app-title {
+  font-family: "Lacquer", cursive;
   font-size: 3rem;
   font-weight: 700;
   color: var(--primary-orange);
@@ -136,6 +137,9 @@ header {
   border: none;
   border-radius: 50px;
   font-size: 1rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   background-color: var(--white);
   box-shadow: 0 2px 8px var(--shadow);
   outline: none;
@@ -153,7 +157,8 @@ header {
   background-color: var(--primary-orange);
   color: var(--white);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: "Lacquer", cursive;
   cursor: pointer;
   box-shadow: 0 2px 8px var(--shadow);
   transition: all 0.3s ease;
@@ -177,7 +182,8 @@ header {
   background-color: var(--white);
   color: var(--primary-orange);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: "Lacquer", cursive;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 60px;
@@ -215,6 +221,7 @@ header {
 }
 
 .location-name {
+  font-family: "Lacquer", cursive;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-dark);
@@ -222,6 +229,7 @@ header {
 }
 
 .section-title {
+  font-family: "Lacquer", cursive;
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-dark);
@@ -263,7 +271,7 @@ header {
 
 .forecast-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -293,10 +301,12 @@ header {
 }
 
 .forecast-date {
-  font-size: 0.9rem;
+  font-family: "Lacquer", cursive;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-dark);
   margin-bottom: 0.5rem;
+  white-space: nowrap;
 }
 
 .forecast-emoji {
@@ -305,16 +315,20 @@ header {
 }
 
 .forecast-condition {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--text-light);
   margin-bottom: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .forecast-temps {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-dark);
   margin-bottom: 0.5rem;
+  white-space: nowrap;
 }
 
 .temp-high {
@@ -327,12 +341,13 @@ header {
 
 .temp-divider {
   color: var(--text-light);
-  margin: 0 0.3rem;
+  margin: 0 0.2rem;
 }
 
 .forecast-precip {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-light);
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -367,10 +382,14 @@ header {
   }
 
   .forecast-section {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .forecast-card {
     padding: 1rem;
+  }
+
+  .forecast-emoji {
+    font-size: 2rem;
   }
 }

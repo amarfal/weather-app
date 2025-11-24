@@ -109,15 +109,8 @@ export function formatFullDate(dateString) {
 export function getWeatherEmoji(condition) {
   const conditionLower = condition.toLowerCase();
 
-  if (conditionLower.includes("clear") || conditionLower.includes("sunny")) {
-    return "☀️";
-  }
-  if (
-    conditionLower.includes("rain") ||
-    conditionLower.includes("drizzle") ||
-    conditionLower.includes("shower")
-  ) {
-    return "🌧️";
+  if (conditionLower.includes("snow") || conditionLower.includes("blizzard")) {
+    return "❄️";
   }
   if (
     conditionLower.includes("thunder") ||
@@ -126,8 +119,15 @@ export function getWeatherEmoji(condition) {
   ) {
     return "⚡";
   }
-  if (conditionLower.includes("snow") || conditionLower.includes("blizzard")) {
-    return "❄️";
+  if (
+    conditionLower.includes("rain") ||
+    conditionLower.includes("drizzle") ||
+    conditionLower.includes("shower")
+  ) {
+    return "🌧️";
+  }
+  if (conditionLower.includes("clear") || conditionLower.includes("sunny")) {
+    return "☀️";
   }
   if (
     conditionLower.includes("cloud") ||
