@@ -5,5 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
   </head>
-  <body></body>
+  <body>
+    <div id="gif-background"></div>
+
+    <div class="container">
+      <header>
+        <h1 class="app-title">Weather</h1>
+        <p class="app-subtitle">Real-time Weather Forecasts</p>
+      </header>
+
+      <div class="search-section">
+        <form id="search-form">
+          <input
+            type="text"
+            id="location-input"
+            placeholder="Enter location"
+            required
+          />
+          <button type="submit" class="search-button">Search</button>
+        </form>
+        <button id="unit-toggle" class="toggle-button">°C</button>
+      </div>
+
+      <div id="error-message" class="error-message"></div>
+
+      <main>
+        <section id="current-weather" class="current-weather-section"></section>
+        <section id="forecast" class="forecast-section"></section>
+      </main>
+    </div>
+  </body>
 </html>
