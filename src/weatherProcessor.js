@@ -1,9 +1,17 @@
 export function processWeatherData(rawData) {
   const currentConditions = rawData.currentConditions;
   const forecast = rawData.days;
+  const currentDay = rawData.days[0];
+
+  const isNightTime = checkIfNightTime(
+    currentConditions.datetime,
+    currentDay.sunrise,
+    currentDay.sunset,
+  );
 
   return {
     location: rawData.resolvedAddress,
+    isNight: isNightTime,
     current: {
       temp: currentConditions.temp,
       feelsLike: currentConditions.feelslike,
@@ -23,6 +31,19 @@ export function processWeatherData(rawData) {
       icon: day.icon,
     })),
   };
+}
+
+function checkIfNightTime(currentTime, sunrise, sunset) {
+  const parseTime = (timeStr) => {
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
+  const currentMinutes = parseTime(currentTime);
+  const sunriseMinutes = parseTime(sunrise);
+  const sunsetMinutes = parseTime(sunset);
+
+  return currentMinutes < sunriseMinutes || currentMinutes > sunsetMinutes;
 }
 
 export function convertToFahrenheit(celsius) {

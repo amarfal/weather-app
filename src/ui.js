@@ -1,4 +1,17 @@
-import { formatTemperature, formatDate, formatFullDate } from "./weatherProcessor.js";
+import {
+  formatTemperature,
+  formatDate,
+  formatFullDate,
+} from "./weatherProcessor.js";
+
+export function setTheme(isNight) {
+  const body = document.body;
+  if (isNight) {
+    body.classList.add("night-mode");
+  } else {
+    body.classList.remove("night-mode");
+  }
+}
 
 export function renderCurrentWeather(data, unit) {
   const currentWeatherSection = document.getElementById("current-weather");
@@ -101,4 +114,3 @@ export function clearDisplay() {
   document.getElementById("forecast").innerHTML = "";
   setBackgroundGif(null);
 }
-

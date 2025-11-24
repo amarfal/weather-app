@@ -5,6 +5,7 @@ import {
   renderCurrentWeather,
   renderForecast,
   setBackgroundGif,
+  setTheme,
   showError,
   clearError,
   clearDisplay,
@@ -22,6 +23,7 @@ async function loadWeather(location) {
 
     const gifUrl = await fetchWeatherGif(currentWeatherData.current.condition);
 
+    setTheme(currentWeatherData.isNight);
     renderCurrentWeather(currentWeatherData, currentUnit);
     renderForecast(currentWeatherData.forecast, currentUnit);
     setBackgroundGif(gifUrl);
